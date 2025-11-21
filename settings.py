@@ -52,7 +52,8 @@ DATABASES = {
 # override if we have an env variable
 if get_from_env('DATABASE_URL', None):
     import dj_database_url
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    DATABASES['default'] = ssl_required = (get_from_env('DATABASE_SSL_REQUIRE', '1') == '1')
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=ssl_required)
     DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 
 # explicitly set the default auto-created primary field to silence warning models.W042
@@ -63,13 +64,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'America/Sao_paulo'
 
 USE_TZ = False
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 SITE_ID = 1
 
@@ -90,6 +91,7 @@ MEDIA_URL = ''
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
 STATIC_URL = '/media/'
+STATIC_ROOT = get_from_env('STATIC_ROOT', os.path.join(os.path.dirname(__file__), 'sitestatic'))
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = get_from_env('SECRET_KEY', 'replaceme')
@@ -137,6 +139,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 ]
 
 ROOT_URLCONF = 'urls'
@@ -155,12 +158,21 @@ TEMPLATES = [
             # os.path.join(ROOT_PATH, 'server_ui/templates'),  # covered by APP_DIRS:True
         ],
         'OPTIONS': {
-            'debug': DEBUG
+            'debug': DEBUG,
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
         }
     },
 ]
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
