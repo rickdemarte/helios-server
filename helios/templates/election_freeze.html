@@ -1,41 +1,41 @@
 {% extends TEMPLATE_BASE %}
 
 {% block content %}
-  <h2 class="title">{{election.name}} &mdash; Freeze Ballot</h2>
+  <h2 class="title">{{election.name}} &mdash; Fechar cédula</h2>
 <p>
-Once an election is frozen, the questions, options, and trustees can no longer be modified.<br />
+Depois que uma eleição é fechada, as perguntas, opções e responsáveis não podem mais ser alterados.<br />
 </p>
 
 <p>
 {% if election.openreg %}
-Registration for your election is currently <b>open</b>, which means anyone can vote, even after you freeze the ballot.
+O registro para sua eleição está atualmente <b>aberto</b>, o que significa que qualquer pessoa pode votar, mesmo depois de você fechar a cédula.
 {% else %}
-Registration for your election is currently <b>closed</b>, which means only the voters you designate will be able to cast a ballot. As the administrator, you will still be able to modify that voter list as the election progresses.
+O registro para sua eleição está atualmente <b>fechado</b>, o que significa que apenas os eleitores que você designar poderão enviar uma cédula. Como administrador, você ainda poderá modificar essa lista de eleitores enquanto a eleição estiver em andamento.
 {% endif %}
 </p>    
 
 {% if helios.VOTERS_EMAIL %}
 <p>
-You must freeze the ballot before you can contact voters.
+Você deve fechar a cédula antes de entrar em contato com os eleitores.
 </p>
 {% endif %}
 
 {% if issues_p %}
 <p>
-    Before you can freeze the election, you will need to:
+    Antes de fechar a eleição, você precisará:
     <ul>
         {% for issue in issues %}
         <li>{{issue.action}}</li>
         {% endfor %}
     </ul>
-    <a href="{% url "election@view" election.uuid %}">go back to the election</a>
+    <a href="{% url "election@view" election.uuid %}">voltar para a eleição</a>
 </p>
 {% else %}
 <form method="post" action="">
 <input type="hidden" name="csrf_token" value="{{csrf_token}}" />
     
-<input class="button" type="submit" value="Freeze the ballot" />
-<button onclick="document.location='{% url "election@view" election.uuid %}'; return false;">do NOT freeze yet</button>
+<input class="button" type="submit" value="Fechar a cédula" />
+<button onclick="document.location='{% url "election@view" election.uuid %}'; return false;">NÃO fechar agora</button>
 </form>
 {% endif %}
 

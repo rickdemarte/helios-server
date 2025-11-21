@@ -3,10 +3,12 @@ from django.conf import settings
 from django.urls import include, path, re_path
 from django.views.static import serve
 from helios import views as helios_views
+from django.contrib import admin
 
 urlpatterns = [
     path('auth/', include('helios_auth.urls')),
     path('helios/', include('helios.urls')),
+    path('admin/', admin.site.urls),
 
     # SHOULD BE REPLACED BY APACHE STATIC PATH
     re_path(r'booth/(?P<path>.*)$', serve, {'document_root' : settings.ROOT_PATH + '/heliosbooth'}),

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="pt-BR" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pt-BR" > <!--<![endif]-->
 
 <head>
   <meta charset="utf-8">
@@ -48,7 +48,7 @@
 	<li class="divider"></li>
 	{% endif %}
 	{% if not settings.MASTER_HELIOS %}
-	<li><a href="http://heliosvoting.org">About Helios</a></li>
+	<li><a href="http://heliosvoting.org">Sobre o Helios</a></li>
 	{% endif %}
       </ul>
       
@@ -56,18 +56,18 @@
         <li><a href="/">{{settings.SITE_TITLE}}</a></li>
 	{% if settings.MASTER_HELIOS %}
         <li class="divider"></li>
-        <li class="active"><a href="/about">About</a></li>
+        <li class="active"><a href="/about">Sobre</a></li>
         <li class="divider"></li>
-        <li><a target="_new" href="https://github.com/benadida/helios-server">Code</a></li>
+        <li><a target="_new" href="https://github.com/benadida/helios-server">Código</a></li>
         <li class="divider"></li>
-        <li><a href="/docs">Docs</a></li>
+        <li><a href="/docs">Documentação</a></li>
         <li class="divider"></li>
         <li><a href="/faq">FAQ</a></li>
         <li class="divider"></li>
-        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/privacy">Privacidade</a></li>
 	{% endif %}
         <li class="divider"></li>
-        <li><a href="mailto:{{settings.HELP_EMAIL_ADDRESS}}">Help!</a></li>
+        <li><a href="mailto:{{settings.HELP_EMAIL_ADDRESS}}">Ajuda!</a></li>
       </ul>
     </section>
   </nav>
@@ -89,16 +89,16 @@
       {% endif %}
     </span>-->
     {% if user %}
-    logged in as <b>{{user.display_html_small|safe}}</b>&nbsp;&nbsp;
-    <a class="tiny button" href="{% url "auth@logout" %}?return_url={{CURRENT_URL}}">logout</a><br />
+    conectado como <b>{{user.display_html_small|safe}}</b>&nbsp;&nbsp;
+    <a class="tiny button" href="{% url "auth@logout" %}?return_url=/">sair</a><br />
     {% else %}
     {% if voter %}
-    You are signed in as voter <u>{% if voter.alias %}{{voter.alias}}{% else %}{{voter.name}}{% endif %}</u> in election <u>{{voter.election.name}}</u>. [<a href="{{settings.SECURE_URL_HOST}}{% url "auth@logout" %}?return_url={{CURRENT_URL}}">sign out</a>]
+    Você está autenticado como eleitor <u>{% if voter.alias %}{{voter.alias}}{% else %}{{voter.name}}{% endif %}</u> na eleição <u>{{voter.election.name}}</u>. [<a href="{{settings.SECURE_URL_HOST}}{% url "auth@logout" %}?return_url=/">sair</a>]
     {% else %}
 {% if settings.SHOW_LOGIN_OPTIONS %}
-    not logged in. <a class="tiny button" href="{{settings.SECURE_URL_HOST}}{% url "auth@index" %}?return_url={{CURRENT_URL}}">log in</a>
+    não conectado. <a class="tiny button" href="{{settings.SECURE_URL_HOST}}{% url "auth@index" %}?return_url={{CURRENT_URL}}">entrar</a>
 {% else %}
-powered by <a href="http://heliosvoting.org">Helios Voting</a>.
+com tecnologia <a href="http://heliosvoting.org">Helios Voting</a>.
 {% endif %}
     {% endif %}
     {% endif %}
